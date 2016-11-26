@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :username, :presence => true
-  validates :username, :uniqueness => { :scope => [:user_id] }
+  validates :username, :uniqueness => { :scope => [:email] }
 
   has_many :photos
   has_many :comments
