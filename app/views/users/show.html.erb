@@ -1,0 +1,12 @@
+<div class="page-header">
+  <h3> <%= @user.username %></h3>
+</div>
+
+<% Photo.where(:user_id=>@user.id).each do |photo| %>
+<li><img src="<%= photo.image %>" width = "200"><%=photo.user_id %> </li>
+<% end %>
+
+
+<% Like.where(:user_id=>@user.id).each do |like|%>
+              <li> <%=like.photo_id%></li>
+          <% end %>
