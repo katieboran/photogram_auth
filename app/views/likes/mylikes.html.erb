@@ -1,0 +1,14 @@
+<div class="page-header">
+  <h3> My Likes</h3>
+</div>
+
+<% Like.where(:user_id=>current_user).each do |like| %>
+<% Photo.find(like.photo_id) do |photo|%>
+<table>
+  <tr>
+    <img src="<%= photo.image %>">
+  </tr>
+</table>
+
+<% end %>
+<%end %>

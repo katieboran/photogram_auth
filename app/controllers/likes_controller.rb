@@ -5,6 +5,12 @@ class LikesController < ApplicationController
     render("likes/index.html.erb")
   end
 
+  def mylikes
+    @likes = Like.all
+
+    render("likes/mylikes.html.erb")
+  end
+
   def show
     @like = Like.find(params[:id])
 

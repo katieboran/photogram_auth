@@ -5,10 +5,10 @@ class UsersController < ApplicationController
     render("users/index.html.erb")
   end
 
-  def mylikes
-    @user = User.find(params[:id])
+  def index
+    @users = User.all
 
-    render("users/mylikes.html.erb")
+    render("users/index.html.erb")
   end
 
   def show

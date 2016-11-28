@@ -1,32 +1,98 @@
-<div class="page-header">
-  <h1>
-    Photos
-    <a href="/photos/new" class="btn btn-lg btn-success">New Photo</a>
-  </h1>
-</div>
 
-<div class="row">
-  <div class="col-md-12">
-    <table class="table table-striped table-hover">
-      <tr>
-        <th>Caption</th>
-        <th>Image</th>
-        <th>User</th>
-        <th>Actions</th>
-      </tr>
+<head>
+  <meta charset="utf-8">
+  <title>PhotogramAuth</title>
 
-      <% @photos.each do |photo| %>
-      <tr>
-        <td><%= photo.caption %></td>
-        <td><img src="<%= photo.image %>" width = "200"></td>
-        <td><%= photo.user_id %></td>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <style>
+  /* Only necessary if you are using navbar-fixed-top */
+  body {
+    padding-top: 80px;
+  }
+  </style>
+
+  <link rel="stylesheet" media="all" href="/assets/application-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css" />
+  <script src="/assets/application-621d42acc022fcbdf3cee7476f795622db63b6004acdc2f4e0a242cc1802b729.js"></script>
+  <meta name="csrf-param" content="authenticity_token" />
+  <meta name="csrf-token" content="gL7jmq/fwRSpMbm6HyIOmha54UiPhoQIifYAnZ6Lrfq5cxrtDorU4KJwOPI7kHoWbgkhhnuLXJoX0jvSl2Lq7w==" />
+
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1>
+      Photos
+      <a href="/photos/new" class="btn btn-lg btn-success">New Photo</a>
+    </h1>
+  </div>
+
+  <% @photos.each do |photo| %>
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= photo.user.username %></div>
+    <div class="panel-body">
+      <table>
+        <tr align="center"><img src="<%= photo.image %>" class="img-responsive" alt="Responsive image"></tr>
+
+        <!--<td><%= photo.user_id %></td> -->
+        <!--
         <td>
-          <a href="/photos/<%= photo.id %>" class="btn btn-primary">Show</a>
-          <a href="/photos/<%= photo.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_photo/<%= photo.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
-        </td>
-      </tr>
-      <% end %>
+        <a href="/photos/<%= photo.id %>" class="btn btn-primary">Show</a>
+        <% if current_user.id == photo.user_id  %>
+        <a href="/photos/<%= photo.id %>/edit" class="btn btn-warning">Edit</a>
+        <a href="/delete_photo/<%= photo.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        <% end %>
+        <td>
+      -->
     </table>
+    <table>
+      <tr><%= photo.caption %></tr>
+      <tr><%=  %> </tr>
+    </table>
+
+
+
+
+    <p>
+      <form action="/create_like" method="post">
+        <!-- Hidden input for authenticity token to protect from forgery -->
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+        <input type="hidden" name="photo_id" value="<%=photo.id%>">
+
+        <input type="hidden" name="user_id" value="<%=current_user.id%>">
+
+        <button class="btn btn-link">
+          <i class="fa fa-heart-o"></i>
+        </button>
+      </form>
+    </p>
+
+    <p><div class="media">
+      <div class="media-left">
+      </div>
+      <div class="media-body">
+        ...
+      </div>
+    </div></p>
+
+    <form action="/create_comment" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+      <!-- Label and input for caption -->
+      <input type="hidden" name="photo_id" value="<%=photo.id%>">
+      <input type="text" id="body" name="body" placeholder="Add a comment..."class="form-control" required>
+      <input type="hidden" name="user_id" value="<%=photo.user_id%>">
+
+    </form>
+
+
   </div>
 </div>
+<% end %>
+</body>
